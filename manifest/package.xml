@@ -25,11 +25,30 @@
 		<name>AuraDefinitionBundle</name>
 	</types>
 	<types>
+		<members>Project_Line_Item__c.HoursPending__c</members>
+		<members>Project_Line_Item__c.HoursPerRole__c</members>
+		<members>Project_Line_Item__c.Project__c</members>
+		<members>Project_Line_Item__c.Role__c</members>
+		<members>Project_Resources__c.EndDate__c</members>
+		<members>Project_Resources__c.HoursAllocated__c</members>
+		<members>Project_Resources__c.Project_Line_Item__c</members>
+		<members>Project_Resources__c.StartDate__c</members>
+		<members>Project_Resources__c.User__c</members>
+		<members>Project__c.Amount__c</members>
+		<members>Project__c.Client__c</members>
+		<members>Project__c.EndDate__c</members>
 		<members>Project__c.Opportunity__c</members>
+		<members>Project__c.ProjectManager__c</members>
+		<members>Project__c.QuantityHours__c</members>
+		<members>Project__c.SquadLead__c</members>
+		<members>Project__c.StartDate__c</members>
+		<members>Project__c.Status__c</members>
 		<members>User.Rate__c</members>
 		<name>CustomField</name>
 	</types>
 	<types>
+		<members>Project_Line_Item__c</members>
+		<members>Project_Resources__c</members>
 		<members>Project__c</members>
 		<members>User</members>
 		<name>CustomObject</name>
