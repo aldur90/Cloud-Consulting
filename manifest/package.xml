@@ -26,6 +26,9 @@
 	</types>
 	<types>
 		<members>Opportunity.Amount__c</members>
+		<members>Opportunity.EndDate__c</members>
+		<members>Opportunity.ProjectManager__c</members>
+		<members>Opportunity.StartDate__c</members>
 		<members>Opportunity_Line_Item__c.Amount__c</members>
 		<members>Opportunity_Line_Item__c.Opportunity__c</members>
 		<members>Opportunity_Line_Item__c.QuantityHours__c</members>
@@ -52,6 +55,7 @@
 		<name>CustomField</name>
 	</types>
 	<types>
+		<members>Opportunity</members>
 		<members>Opportunity_Line_Item__c</members>
 		<members>Project_Line_Item__c</members>
 		<members>Project_Resources__c</members>
