@@ -3,9 +3,9 @@
     <fullName>Amount__c</fullName>
     <externalId>false</externalId>
     <label>Amount</label>
-    <precision>18</precision>
-    <required>false</required>
-    <scale>2</scale>
+    <summarizedField>Opportunity_Line_Item__c.Amount__c</summarizedField>
+    <summaryForeignKey>Opportunity_Line_Item__c.Opportunity__c</summaryForeignKey>
+    <summaryOperation>sum</summaryOperation>
     <trackTrending>false</trackTrending>
-    <type>Currency</type>
+    <type>Summary</type>
 </CustomField>

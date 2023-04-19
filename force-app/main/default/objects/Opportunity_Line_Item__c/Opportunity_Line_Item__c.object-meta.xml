@@ -153,12 +153,12 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ControlledByParent</externalSharingModel>
-    <label>Project Resource</label>
+    <label>Opportunity Line Item</label>
     <nameField>
-        <label>Project Resources Name</label>
+        <label>Opportunity Line Item Name</label>
         <type>Text</type>
     </nameField>
-    <pluralLabel>Project Resources</pluralLabel>
+    <pluralLabel>Opportunity Line Items</pluralLabel>
     <searchLayouts></searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
     <visibility>Public</visibility>
