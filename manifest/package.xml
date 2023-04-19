@@ -25,6 +25,9 @@
 		<name>AuraDefinitionBundle</name>
 	</types>
 	<types>
+		<members>Opportunity.End_Proyect_Date__c</members>
+		<members>Opportunity.Start_Proyect_Date__c</members>
+		<members>OpportunityLineItem.Rol__c</members>
 		<members>Project_Line_Item__c.HoursPending__c</members>
 		<members>Project_Line_Item__c.HoursPerRole__c</members>
 		<members>Project_Line_Item__c.Project__c</members>
@@ -47,6 +50,8 @@
 		<name>CustomField</name>
 	</types>
 	<types>
+		<members>Opportunity</members>
+		<members>OpportunityLineItem</members>
 		<members>Project_Line_Item__c</members>
 		<members>Project_Resources__c</members>
 		<members>Project__c</members>
