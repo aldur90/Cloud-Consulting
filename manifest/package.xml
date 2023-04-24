@@ -33,6 +33,8 @@
 		<members>Opportunity_Line_Item__c.Opportunity__c</members>
 		<members>Opportunity_Line_Item__c.QuantityHours__c</members>
 		<members>Opportunity_Line_Item__c.Role__c</members>
+		<members>Project_Line_Item__c.HoursAllocated__c</members>
+		<members>Project_Line_Item__c.HoursPending__c</members>
 		<members>Project_Line_Item__c.HoursPerRole__c</members>
 		<members>Project_Line_Item__c.Project__c</members>
 		<members>Project_Line_Item__c.Role__c</members>

@@ -1,0 +1,13 @@
+<template>
+    <template if:true={rolesWithoutAssignment}>
+      <lightning-card title="Allocate Resources">
+      <p class="slds-p-horizontal_small"></p>
+      <template for:each={rolesWithoutAssignment.data} for:item="role">
+        <div key={role}>
+            <c-allocate-resource role={role} record-id={recordId}></c-allocate-resource>
+          </div>
+      </template>
+      <p slot="footer"></p>
+    </lightning-card>
+    </template>
+  </template>
