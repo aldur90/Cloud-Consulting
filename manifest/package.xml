@@ -57,13 +57,15 @@
 		<name>CustomField</name>
 	</types>
 	<types>
-		<members>Opportunity</members>
-		<members>Opportunity_Line_Item__c</members>
 		<members>Project_Line_Item__c</members>
 		<members>Project_Resources__c</members>
 		<members>Project__c</members>
 		<members>User</members>
 		<name>CustomObject</name>
+	</types>
+	<types>
+		<members>*</members>
+		<name>Flow</name>
 	</types>
 	<types>
 		<members>*</members>
