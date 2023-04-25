@@ -74,7 +74,7 @@ public with sharing class resourcesAllocation {
     List<Project_Resources__c> projectResources = (List<Project_Resources__c>) JSON.deserialize(allocationJSON, List<Project_Resources__c>.class);
     
     insert projectResources;
-
+    
     return true;
   }
 
