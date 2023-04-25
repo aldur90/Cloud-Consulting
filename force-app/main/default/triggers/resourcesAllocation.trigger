@@ -9,6 +9,7 @@ trigger resourcesAllocation on Project_Resources__c (before insert) {
                 + ' on the indicated date ' 
                 + rRejected.StartDate__c + ' - ' 
                 + rRejected.EndDate__c);
+
         }
    }
 
