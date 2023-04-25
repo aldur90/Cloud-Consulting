@@ -1,5 +1,5 @@
 <template>
-    <template if:true={rolesWithoutAssignment}>
+      <template if:true={rolesWithoutAssignment}>
       <lightning-card title="Allocate Resources">
       <p class="slds-p-horizontal_small"></p>
       <template for:each={rolesWithoutAssignment.data} for:item="role">
@@ -11,3 +11,5 @@
     </lightning-card>
     </template>
   </template>
+
+  

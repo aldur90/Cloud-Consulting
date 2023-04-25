@@ -2,6 +2,10 @@ import { LightningElement, api, track, wire } from "lwc";
 import getAvailableEmployeesByRole from "@salesforce/apex/resourcesAllocation.getAvailableEmployeesByRole";
 import getHoursPendingByRole from "@salesforce/apex/resourcesAllocation.getHoursPendingByRole";
 import allocateResources from "@salesforce/apex/resourcesAllocation.allocateResources";
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import { loadStyle } from 'lightning/platformResourceLoader';
+//import CUSTOMCSS from '@salesforce/resourceUrl/allocateResource.css';
+
 
 /* 
 * How to use lightning-datatable
@@ -33,6 +37,7 @@ const columns = [
 export default class AllocateResource extends LightningElement {
 
     saveDraftValues = [];
+    isCssLoaded = false;
     @api role;
     @api recordId;
     @api columns = columns;
@@ -45,6 +50,17 @@ export default class AllocateResource extends LightningElement {
       this.resList = undefined;
     }
     }
+
+    renderedCallback(){
+
+      if(this.isCssLoaded) return this.isCssLoaded = true;
+      loadStyle(this,CUSTOMCSS).then(()=>{
+          console.log('loaded');
+      })
+      .catch(error=>{
+          console.log('error to load');
+      });
+      }
 
     @api handleSave(event) {
       
@@ -63,25 +79,32 @@ export default class AllocateResource extends LightningElement {
 
       console.log(inputsDates);
       allocateResources({ allocationJSON: inputsDates })
-      .then((res) => {
-        console.log("New Project Resource: " , res);
-        this.dispatchEvent(
-          new ShowToastEvent({
-            title: "Success",
-            message: res,
-            variant: "success"
-          })
-        );
+      .then(() => {
+        //$('.forceToastManager').css('white-space', 'pre-wrap');
+        //console.log("New Project Resource: " , res);
+        const event = new ShowToastEvent({
+          title: 'Assigned!',
+          message: 'Successfully Assigned Resources',
+          variant: 'success'
+          });
+          this.dispatchEvent(event);
       })
       .catch((error) => {
-        console.log(error);
-        this.dispatchEvent(
-          new ShowToastEvent({
-            title: "Error",
-            message: "ERROR!! ",
-            variant: "error"
-          })
-        );
+        //$('.forceToastManager').css('white-space', 'pre-wrap');
+        console.log('CATCH ERROR-->');
+        console.log(typeof error.body.pageErrors);
+        console.log(error.body.pageErrors);
+        //var msg = 'This is first-line \nThis is Second Line. \nThis is the third Line.';
+        //this.error = error.body.pageErrors.map(e => e.message).join(', ');
+        //$('.forceToastManager').css('white-space', 'pre-wrap');
+        const event = new ShowToastEvent({
+          title: 'ERROR',
+          message: error.body.pageErrors[0].message,
+          //message: msg,
+          variant: 'Error'
+        });
+        this.dispatchEvent(event);
+        
       });
     }
 

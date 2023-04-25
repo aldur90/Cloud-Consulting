@@ -71,11 +71,11 @@ public with sharing class resourcesAllocation {
  @AuraEnabled
  public static Boolean allocateResources(String allocationJSON){
 
-   List<Project_Resources__c> projectResources = (List<Project_Resources__c>) JSON.deserialize(allocationJSON, List<Project_Resources__c>.class);
-   
-   insert projectResources;
-
-   return true;
- }
+    List<Project_Resources__c> projectResources = (List<Project_Resources__c>) JSON.deserialize(allocationJSON, List<Project_Resources__c>.class);
+    
+    insert projectResources;
+    
+    return true;
+  }
 
 }
