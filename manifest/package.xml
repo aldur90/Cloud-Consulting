@@ -54,6 +54,7 @@
 		<members>Project__c.StartDate__c</members>
 		<members>Project__c.Status__c</members>
 		<members>User.Rate__c</members>
+		<members>User.notAvailableDates__c</members>
 		<name>CustomField</name>
 	</types>
 	<types>

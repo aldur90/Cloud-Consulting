@@ -3,9 +3,7 @@ import getAvailableEmployeesByRole from "@salesforce/apex/resourcesAllocation.ge
 import getHoursPendingByRole from "@salesforce/apex/resourcesAllocation.getHoursPendingByRole";
 import allocateResources from "@salesforce/apex/resourcesAllocation.allocateResources";
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import { loadStyle } from 'lightning/platformResourceLoader';
-//import CUSTOMCSS from '@salesforce/resourceUrl/allocateResource.css';
-
+import calculateWorkingDays from "@salesforce/apex/resourcesAllocation.calculateWorkingDays";
 
 /* 
 * How to use lightning-datatable
@@ -20,6 +18,8 @@ const columns = [
     { label: "Name", fieldName: "FirstName" },
     { label: "LastName", fieldName: "LastName" },
     { label: "Rate", fieldName: "Rate__c", type: "currency" },
+    { label: "Assigned", fieldName: "notAvailableDates__c", type: "text", initialWidth: 200, wrapText: true },
+    { label: "Available Days", fieldName: "availableDays__c", type: "number" },
     {
       label: "Start Date",
       fieldName: "startDate",
@@ -34,6 +34,18 @@ const columns = [
     }
   ];
 
+  /*function getBusinessDatesCount(startDate, endDate) {
+    let count = 0;
+    const curDate = new Date(startDate.getTime());
+    while (curDate <= endDate) {
+        const dayOfWeek = curDate.getDay();
+        if(dayOfWeek !== 0 && dayOfWeek !== 6) count++;
+        curDate.setDate(curDate.getDate() + 1);
+    }
+    alert(count);
+    return count;
+  };*/
+
 export default class AllocateResource extends LightningElement {
 
     saveDraftValues = [];
@@ -41,27 +53,67 @@ export default class AllocateResource extends LightningElement {
     @api role;
     @api recordId;
     @api columns = columns;
+    
+    resolveAfter2Seconds() {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          resolve('resolved');
+        }, 2000);
+      });
+    }
+
+    async asyncCall() {
+      console.log('calling');
+      const result = await resolveAfter2Seconds();
+      console.log(result);
+      // Expected output: "resolved"
+    }
+
+    syncDelay(milliseconds){
+      var start = new Date().getTime();
+      var end = 0;
+  
+      while((end - start) < milliseconds){
+          end = new Date().getTime();
+      }
+  }
+
+    getBusinessDatesCount(startDate, endDate) {
+      let count = 0;
+      const curDate = new Date(startDate.getTime());
+      while (curDate <= endDate) {
+          const dayOfWeek = curDate.getDay();
+          if(dayOfWeek !== 0 && dayOfWeek !== 6) count++;
+          curDate.setDate(curDate.getDate() + 1);
+      }
+      //alert(count);
+      return count;
+    }
 
     @track resList;
     @wire(getAvailableEmployeesByRole, { roleName: "$role.Role__c", projectId: "$recordId" })
     resourceList(result, error) {
-    this.resList = result;
+      this.resList = result;
     if (result.error) {
       this.resList = undefined;
     }
     }
 
-    renderedCallback(){
-
-      if(this.isCssLoaded) return this.isCssLoaded = true;
-      loadStyle(this,CUSTOMCSS).then(()=>{
-          console.log('loaded');
-      })
-      .catch(error=>{
-          console.log('error to load');
+    @track workingDays
+    getWorkingDays(startDate, endDate){
+      calculateWorkingDays({startDate: startDate, endDate: endDate})
+      .then((result) => {
+          console.log('Dias Habiles: ' + result);
+          this.workingDays = result;
+          console.log('workingDays: ' + this.workingDays);
+          
+      }).catch((error) => {
+          
+          console.log(error);
       });
-      }
+  }
 
+    
     @api handleSave(event) {
       
       const inputsDates = JSON.stringify(
@@ -72,6 +124,20 @@ export default class AllocateResource extends LightningElement {
           fields.Project_Line_Item__c = this.role.Id;
           fields.StartDate__c = draft.startDate;
           fields.EndDate__c = draft.endDate;
+          console.log('Antes Dias Habiles Front ' + this.workingDays);
+          let startDate = new Date( Date.parse(draft.startDate) );
+          console.log('Start ' + draft.startDate);
+          console.log('Start ' + startDate);
+          let endDate = new Date( Date.parse(draft.endDate) );
+          console.log('End ' + draft.endDate);
+          console.log('End ' + endDate);
+          this.workingDays = this.getBusinessDatesCount(startDate,endDate);
+          console.log('Despues Dias Habiles Front ' + this.workingDays);
+          fields.RequieredHours__c = Math.ceil((Date.parse(draft.endDate)-Date.parse(draft.startDate)+1) / (1000 * 3600 * 24))*8;
+          //console.log('Start ' + Date.parse(draft.startDate));
+          //console.log(typeof Date.parse(draft.startDate));
+          console.log('Horas ' + fields.RequieredHours__c);
+          console.log('Despues Dias Habiles Front ' + this.workingDays);
           
           return fields;
         })
@@ -80,8 +146,6 @@ export default class AllocateResource extends LightningElement {
       console.log(inputsDates);
       allocateResources({ allocationJSON: inputsDates })
       .then(() => {
-        //$('.forceToastManager').css('white-space', 'pre-wrap');
-        //console.log("New Project Resource: " , res);
         const event = new ShowToastEvent({
           title: 'Assigned!',
           message: 'Successfully Assigned Resources',
@@ -90,17 +154,10 @@ export default class AllocateResource extends LightningElement {
           this.dispatchEvent(event);
       })
       .catch((error) => {
-        //$('.forceToastManager').css('white-space', 'pre-wrap');
         console.log('CATCH ERROR-->');
-        console.log(typeof error.body.pageErrors);
-        console.log(error.body.pageErrors);
-        //var msg = 'This is first-line \nThis is Second Line. \nThis is the third Line.';
-        //this.error = error.body.pageErrors.map(e => e.message).join(', ');
-        //$('.forceToastManager').css('white-space', 'pre-wrap');
         const event = new ShowToastEvent({
           title: 'ERROR',
           message: error.body.pageErrors[0].message,
-          //message: msg,
           variant: 'Error'
         });
         this.dispatchEvent(event);
@@ -108,8 +165,7 @@ export default class AllocateResource extends LightningElement {
       });
     }
 
-
-
+    
     @track hoursPendingToAssign;
     @wire(getHoursPendingByRole, {
       projectId: "$recordId",
