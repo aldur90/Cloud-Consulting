@@ -36,4 +36,3 @@ trigger resourcesAllocation on Project_Resources__c (before insert) {
    }
 
 }
-

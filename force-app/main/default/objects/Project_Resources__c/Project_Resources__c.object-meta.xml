@@ -149,14 +149,15 @@
     <enableHistory>false</enableHistory>
     <enableLicensing>false</enableLicensing>
     <enableReports>false</enableReports>
-    <enableSearch>false</enableSearch>
+    <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ControlledByParent</externalSharingModel>
     <label>Project Resource</label>
     <nameField>
+        <displayFormat>PR-{0000}</displayFormat>
         <label>Project Resources Name</label>
-        <type>Text</type>
+        <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Project Resources</pluralLabel>
     <searchLayouts></searchLayouts>

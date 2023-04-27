@@ -149,14 +149,15 @@
     <enableHistory>false</enableHistory>
     <enableLicensing>false</enableLicensing>
     <enableReports>false</enableReports>
-    <enableSearch>false</enableSearch>
+    <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ControlledByParent</externalSharingModel>
     <label>Project Line Item</label>
     <nameField>
+        <displayFormat>PLI-{0000}</displayFormat>
         <label>Project Line Item Name</label>
-        <type>Text</type>
+        <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Project Line Items</pluralLabel>
     <searchLayouts></searchLayouts>

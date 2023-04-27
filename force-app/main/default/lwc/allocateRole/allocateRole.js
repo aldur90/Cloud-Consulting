@@ -9,8 +9,13 @@ export default class AllocateRole extends LightningElement {
     roles(result, error) {
     if (result) {
       this.rolesWithoutAssignment = result;
+      console.log(
+        "RolesWhitoutAssignment are: ",
+        this.rolesWithoutAssignment
+      );
     } else if (error) {
       this.rolesWithoutAssignment = undefined;
+      
     }
   }
 

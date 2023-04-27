@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>HoursPending__c</fullName>
+    <fullName>availableDays__c</fullName>
     <externalId>false</externalId>
-    <formula>HoursPerRole__c -  HoursAllocated__c</formula>
-    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-    <label>HoursPending</label>
+    <label>availableDays</label>
     <precision>18</precision>
     <required>false</required>
-    <scale>2</scale>
-    <trackTrending>false</trackTrending>
+    <scale>0</scale>
+    <trackFeedHistory>false</trackFeedHistory>
     <type>Number</type>
     <unique>false</unique>
 </CustomField>
