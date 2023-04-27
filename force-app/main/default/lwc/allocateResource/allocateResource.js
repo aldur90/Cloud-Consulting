@@ -4,6 +4,7 @@ import getHoursPendingByRole from "@salesforce/apex/resourcesAllocation.getHours
 import allocateResources from "@salesforce/apex/resourcesAllocation.allocateResources";
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import calculateWorkingDays from "@salesforce/apex/resourcesAllocation.calculateWorkingDays";
+import { refreshApex } from "@salesforce/apex";
 
 /* 
 * How to use lightning-datatable
@@ -125,19 +126,19 @@ export default class AllocateResource extends LightningElement {
           fields.StartDate__c = draft.startDate;
           fields.EndDate__c = draft.endDate;
           console.log('Antes Dias Habiles Front ' + this.workingDays);
-          let startDate = new Date( Date.parse(draft.startDate) );
+          //let startDate = new Date( Date.parse(draft.startDate) );
+          let startDate = new Date( Date.parse(draft.startDate + ' 06:00:00 GMT') );
           console.log('Start ' + draft.startDate);
           console.log('Start ' + startDate);
-          let endDate = new Date( Date.parse(draft.endDate) );
+          //let endDate = new Date( Date.parse(draft.endDate) );
+          let endDate = new Date( Date.parse(draft.endDate + ' 06:00:00 GMT') );
           console.log('End ' + draft.endDate);
           console.log('End ' + endDate);
           this.workingDays = this.getBusinessDatesCount(startDate,endDate);
           console.log('Despues Dias Habiles Front ' + this.workingDays);
-          fields.RequieredHours__c = Math.ceil((Date.parse(draft.endDate)-Date.parse(draft.startDate)+1) / (1000 * 3600 * 24))*8;
-          //console.log('Start ' + Date.parse(draft.startDate));
-          //console.log(typeof Date.parse(draft.startDate));
-          console.log('Horas ' + fields.RequieredHours__c);
-          console.log('Despues Dias Habiles Front ' + this.workingDays);
+          //fields.RequieredHours__c = Math.ceil((Date.parse(draft.endDate)-Date.parse(draft.startDate)+1) / (1000 * 3600 * 24))*8;
+          fields.RequieredHours__c =  this.workingDays * 8;
+          
           
           return fields;
         })
@@ -152,6 +153,7 @@ export default class AllocateResource extends LightningElement {
           variant: 'success'
           });
           this.dispatchEvent(event);
+          return this.refresh();
       })
       .catch((error) => {
         console.log('CATCH ERROR-->');
@@ -177,5 +179,11 @@ export default class AllocateResource extends LightningElement {
       } else if (error) {
         this.hoursPendingToAssign = undefined;
       }
+    }
+
+    async refresh() {
+      await refreshApex(this.resList);  
+      await refreshApex(this.hoursPendingToAssign);   
+          
     }
 }

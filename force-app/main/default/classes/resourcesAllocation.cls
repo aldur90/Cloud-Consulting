@@ -36,6 +36,7 @@ public with sharing class resourcesAllocation {
                         FROM Project_Resources__r
                         //WHERE (StartDate__c >=: project.StartDate__c AND StartDate__c <=: project.EndDate__c)
                         //OR (EndDate__c >=: project.StartDate__c AND EndDate__c <=: project.EndDate__c)
+                        ORDER BY StartDate__c ASC
                     )
                     FROM User
                     WHERE UserRole.Name = : roleName
@@ -117,7 +118,8 @@ public with sharing class resourcesAllocation {
           String str = String.join( notAvailableDates.get(user.Id), ' \n' );
           system.debug(' list values : '+ str);
           user.notAvailableDates__c = str;
-          availableResources.add(user);
+          if(sumAvailableDates.get(user.Id)!=0) availableResources.add(user);
+          
         }
         
     }

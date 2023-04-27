@@ -64,10 +64,10 @@
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>User__c</field>
+            <field>Project_Line_Item__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>$Record.User__c</elementReference>
+                <elementReference>$Record.Project_Line_Item__c</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
