@@ -119,7 +119,7 @@ public with sharing class resourcesAllocation {
                    SELECT HoursPending__c
                    FROM Project_Line_Item__c
                    WHERE Project__c = : projectId
-                   AND HoursPending__c > 0
+                   //AND HoursPending__c > 0
                    AND Role__c = : roleName
                    ];
                
