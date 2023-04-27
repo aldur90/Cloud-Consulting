@@ -3,7 +3,7 @@ public with sharing class resourcesAllocation {
  
    //List of the roles with pending time to be assigned
    @AuraEnabled(cacheable=true)
-   public static List <Project_Line_Item__c> getRolesWhitoutAssignment (Id projectId) {
+   public static List <Project_Line_Item__c> getRolesWhithoutAssignment (Id projectId) {
     List<Project_Line_Item__c> rolesWithoutAssignment =
                     [
                     SELECT Id, Role__c, HoursPending__c, HoursPerRole__c, HoursAllocated__c 
