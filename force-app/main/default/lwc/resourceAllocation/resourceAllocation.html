@@ -1,0 +1,66 @@
+<template>
+    <lightning-card  title=""  >
+        <div class="card-style">
+            <!--Cabecera donde va el rol y las horas a cubrir-->
+            <div class="header">
+                <h1>Consultores - Horas a cubrir : 250 horas</h1>
+            </div>
+            <!--Recursos-->
+            <lightning-layout class="padding" multiple-rows>
+                <lightning-layout-item size="3">
+                    <div class="resource-style">
+                        <label class="resurce-name">
+                            <input type="checkbox" id="cbox1" value="first_checkbox" class="margin-check">
+                            Julian Velazquez
+                        </label>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item class="rate-style" size="3">
+                    <div>
+                        <p>10usd p/h</p>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item size="3">
+                    <div>
+                        <lightning-input type="Date" label="Desde" class="padding-input"></lightning-input>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item size="3">
+                    <div>
+                        <lightning-input type="Date" label="Hasta"></lightning-input>
+                    </div>
+                </lightning-layout-item>
+            </lightning-layout>
+           <!--RECURSO DUPLICADO!!!!!!!!!!!!!!!!!!!!!-->
+            <lightning-layout class="padding" multiple-rows>
+                <lightning-layout-item size="3">
+                    <div class="resource-style">
+                        <label class="resurce-name">
+                            <input type="checkbox" value="first_checkbox"  class="margin-check">
+                            Julian Velazquez
+                        </label>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item class="rate-style" size="3">
+                    <div>
+                        <p>10usd p/h</p>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item size="3">
+                    <div>
+                        <lightning-input type="Date" label="Desde" class="padding-input"></lightning-input>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item size="3">
+                    <div>
+                        <lightning-input type="Date" label="Hasta"></lightning-input>
+                    </div>
+                </lightning-layout-item>
+            </lightning-layout>
+            <!--Botón para asignar-->
+            <div class="button-ubication"> 
+                <lightning-button variant="brand" label="Asignar" title="Primary action" class="slds-m-right_medium button-style"></lightning-button>
+            </div>
+        </div>
+    </lightning-card>
+</template>

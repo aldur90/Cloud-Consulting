@@ -25,6 +25,15 @@
 		<name>AuraDefinitionBundle</name>
 	</types>
 	<types>
+		<members>Opportunity.Amount__c</members>
+		<members>Opportunity.EndDate__c</members>
+		<members>Opportunity.ProjectManager__c</members>
+		<members>Opportunity.StartDate__c</members>
+		<members>Opportunity_Line_Item__c.Amount__c</members>
+		<members>Opportunity_Line_Item__c.Opportunity__c</members>
+		<members>Opportunity_Line_Item__c.QuantityHours__c</members>
+		<members>Opportunity_Line_Item__c.Role__c</members>
+		<members>Project_Line_Item__c.HoursAllocated__c</members>
 		<members>Project_Line_Item__c.HoursPending__c</members>
 		<members>Project_Line_Item__c.HoursPerRole__c</members>
 		<members>Project_Line_Item__c.Project__c</members>
@@ -45,6 +54,7 @@
 		<members>Project__c.StartDate__c</members>
 		<members>Project__c.Status__c</members>
 		<members>User.Rate__c</members>
+		<members>User.notAvailableDates__c</members>
 		<name>CustomField</name>
 	</types>
 	<types>
@@ -53,6 +63,10 @@
 		<members>Project__c</members>
 		<members>User</members>
 		<name>CustomObject</name>
+	</types>
+	<types>
+		<members>*</members>
+		<name>Flow</name>
 	</types>
 	<types>
 		<members>*</members>

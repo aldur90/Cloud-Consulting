@@ -99,7 +99,7 @@ export default class AllocateResource extends LightningElement {
           this.workingDays = this.getBusinessDatesCount(startDate,endDate);
           console.log('Despues Dias Habiles Front ' + this.workingDays);
           //fields.RequieredHours__c = Math.ceil((Date.parse(draft.endDate)-Date.parse(draft.startDate)+1) / (1000 * 3600 * 24))*8;
-          fields.RequieredHours__c =  this.workingDays * 10;
+          fields.RequieredHours__c =  this.workingDays * 8;
           
           
           return fields;
