@@ -16,9 +16,25 @@ trigger resourcesAllocation on Project_Resources__c (before insert) {
                         ];
 
     Map<Id, User> resourcesRejectedMap = New Map<Id,User>(resourcesRejectedName);
-
+    if (resourcesRejected.size()>0){
+    System.debug('Trigger ' + resourcesRejected[0].RequieredHours__c);
+    System.debug('Equal ' + (resourcesRejected[0].RequieredHours__c == -1));
+    
+    }
+    System.debug('Size ' + (resourcesRejected.size()>0));
     String[] problems = new String[0];
     if (resourcesRejected.size()>0){
+        System.debug('A');
+    if(resourcesRejected[0].RequieredHours__c == -1){
+        System.debug('1');
+        //for(Project_Resources__c rRejected : resourcesRejected){
+        //    rRejected.adderror('Allocated hours exceed pending');
+        
+        resourcesRejected[0].addError('Allocated hours exceed pending');
+        
+        
+    }else{
+        System.debug('2');
         for(Project_Resources__c rRejected : resourcesRejected){                 
             
             problems.add('You Can not Allocate the resource ' 
@@ -35,4 +51,25 @@ trigger resourcesAllocation on Project_Resources__c (before insert) {
                       
    }
 
+
+    /*if (resourcesRejected.size()>0){
+    System.debug('2');
+    for(Project_Resources__c rRejected : resourcesRejected){                 
+        
+        problems.add('You Can not Allocate the resource ' 
+                        + resourcesRejectedMap.get(rRejected.User__c).Name
+                        + ' on the indicated date ' 
+                        + rRejected.StartDate__c + ' - ' 
+                        + rRejected.EndDate__c
+                        //+ '\n'
+                        );            
+        
+    }
+
+    resourcesRejected[0].addError(String.join(problems,'\n///'));
+                  
+    }*/
 }
+
+}
+
