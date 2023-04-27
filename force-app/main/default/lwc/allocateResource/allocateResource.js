@@ -54,31 +54,8 @@ export default class AllocateResource extends LightningElement {
     @api role;
     @api recordId;
     @api columns = columns;
+    update = 0;
     
-    resolveAfter2Seconds() {
-      return new Promise(resolve => {
-        setTimeout(() => {
-          resolve('resolved');
-        }, 2000);
-      });
-    }
-
-    async asyncCall() {
-      console.log('calling');
-      const result = await resolveAfter2Seconds();
-      console.log(result);
-      // Expected output: "resolved"
-    }
-
-    syncDelay(milliseconds){
-      var start = new Date().getTime();
-      var end = 0;
-  
-      while((end - start) < milliseconds){
-          end = new Date().getTime();
-      }
-  }
-
     getBusinessDatesCount(startDate, endDate) {
       let count = 0;
       const curDate = new Date(startDate.getTime());
@@ -87,7 +64,6 @@ export default class AllocateResource extends LightningElement {
           if(dayOfWeek !== 0 && dayOfWeek !== 6) count++;
           curDate.setDate(curDate.getDate() + 1);
       }
-      //alert(count);
       return count;
     }
 
@@ -100,21 +76,7 @@ export default class AllocateResource extends LightningElement {
     }
     }
 
-    @track workingDays
-    getWorkingDays(startDate, endDate){
-      calculateWorkingDays({startDate: startDate, endDate: endDate})
-      .then((result) => {
-          console.log('Dias Habiles: ' + result);
-          this.workingDays = result;
-          console.log('workingDays: ' + this.workingDays);
-          
-      }).catch((error) => {
-          
-          console.log(error);
-      });
-  }
-
-    
+        
     @api handleSave(event) {
       
       const inputsDates = JSON.stringify(
@@ -153,6 +115,7 @@ export default class AllocateResource extends LightningElement {
           variant: 'success'
           });
           this.dispatchEvent(event);
+          this.update ++;
           return this.refresh();
       })
       .catch((error) => {
@@ -171,7 +134,8 @@ export default class AllocateResource extends LightningElement {
     @track hoursPendingToAssign;
     @wire(getHoursPendingByRole, {
       projectId: "$recordId",
-      roleName: "$role.Role__c"    
+      roleName: "$role.Role__c",
+      current: "$update"    
     })
     hoursPending(result, error) {
       if (result.data) {
@@ -183,7 +147,7 @@ export default class AllocateResource extends LightningElement {
 
     async refresh() {
       await refreshApex(this.resList);  
-      await refreshApex(this.hoursPendingToAssign);   
+      
           
     }
 }

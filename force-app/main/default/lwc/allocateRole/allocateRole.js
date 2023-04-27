@@ -1,11 +1,11 @@
 import { LightningElement, api, wire } from "lwc";
-import getRolesWhitoutAssignment from "@salesforce/apex/resourcesAllocation.getRolesWhitoutAssignment";
+import getRolesWhithoutAssignment from "@salesforce/apex/resourcesAllocation.getRolesWhithoutAssignment";
 
 export default class AllocateRole extends LightningElement {
     @api recordId;
     rolesWithoutAssignment;
 
-    @wire(getRolesWhitoutAssignment, { projectId: "$recordId" })
+    @wire(getRolesWhithoutAssignment, { projectId: "$recordId" })
     roles(result, error) {
     if (result) {
       this.rolesWithoutAssignment = result;
@@ -15,6 +15,7 @@ export default class AllocateRole extends LightningElement {
       );
     } else if (error) {
       this.rolesWithoutAssignment = undefined;
+      
     }
   }
 
