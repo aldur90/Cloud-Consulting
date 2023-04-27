@@ -162,7 +162,8 @@ public with sharing class resourcesAllocation {
             workingDays ++;  
         }     
     }  
-    
+          
+    System.debug('--Working days'+workingDays);  
     return workingDays;  
 } 
 
