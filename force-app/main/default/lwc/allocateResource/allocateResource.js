@@ -3,7 +3,6 @@ import getAvailableEmployeesByRole from "@salesforce/apex/resourcesAllocation.ge
 import getHoursPendingByRole from "@salesforce/apex/resourcesAllocation.getHoursPendingByRole";
 import allocateResources from "@salesforce/apex/resourcesAllocation.allocateResources";
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import calculateWorkingDays from "@salesforce/apex/resourcesAllocation.calculateWorkingDays";
 import { refreshApex } from "@salesforce/apex";
 
 /* 
@@ -55,6 +54,7 @@ export default class AllocateResource extends LightningElement {
     @api recordId;
     @api columns = columns;
     update = 0;
+    pending;
     
     getBusinessDatesCount(startDate, endDate) {
       let count = 0;
@@ -140,6 +140,8 @@ export default class AllocateResource extends LightningElement {
     hoursPending(result, error) {
       if (result.data) {
         this.hoursPendingToAssign = result.data[0].HoursPending__c;
+        this.pending = (this.hoursPendingToAssign !=0);
+        console.log('Pendiente ' + this.pending);
       } else if (error) {
         this.hoursPendingToAssign = undefined;
       }
