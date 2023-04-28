@@ -66,7 +66,7 @@ public with sharing class resourcesAllocationTrigger {
             Boolean available = true;
 
             if(prNew.StartDate__c < projectStartDate || prNew.EndDate__c > projectEndDate){
-                resourcesRejected.add(prNew);
+                resourcesRejected.add(prNew);                
                 available = false;
             } else {
 
@@ -90,15 +90,19 @@ public with sharing class resourcesAllocationTrigger {
     private static Boolean validateAvailability(Project_Resources__c prOld, Project_Resources__c prNew){
         Boolean validate = true;
           if (prNew.StartDate__c >= prOld.StartDate__c && prNew.StartDate__c <= prOld.EndDate__c) {
-            resourcesRejected.add(prNew);
+            resourcesRejected.add(prNew);            
             validate = false;
           } else if(prNew.EndDate__c >= prOld.StartDate__c && prNew.EndDate__c <= prOld.EndDate__c) {
-            resourcesRejected.add(prNew);
+            resourcesRejected.add(prNew);            
             validate = false;
-          } else if(prNew.EndDate__c <= prNew.StartDate__c){
-            resourcesRejected.add(prNew);
+          } else if(prNew.EndDate__c < prNew.StartDate__c){
+            resourcesRejected.add(prNew);            
             validate = false;
-          }
+          } else if(prNew.EndDate__c == NULL || prNew.StartDate__c == NULL){
+            System.debug('Fecha NULL');
+            resourcesRejected.add(prNew);            
+            validate = false;
+          } 
           return validate;
     }
 

@@ -14,6 +14,7 @@
       </template>
   
       <template if:true={resList.data}>
+        <lightning-button variant="brand" label="Clean Table" title="Primary action" onclick={handleClick} class="slds-m-left_x-small"></lightning-button>
         <lightning-datatable
           key-field="Id"
           data={resList.data}
