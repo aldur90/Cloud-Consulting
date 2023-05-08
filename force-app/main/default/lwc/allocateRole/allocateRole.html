@@ -3,9 +3,9 @@
       <lightning-card title="Allocate Resources">
       <p class="slds-p-horizontal_small"></p>
       <template for:each={rolesWithoutAssignment.data} for:item="role">
-        <div key={role}>
+        <div key={role} class="padding-style">
             <c-allocate-resource role={role} record-id={recordId}></c-allocate-resource>
-          </div>
+        </div>
       </template>
       <p slot="footer"></p>
     </lightning-card>

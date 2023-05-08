@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Project__c.Project_Line_Items__r$Role__c</field>
+    </columns>
+    <columns>
+        <field>Project__c.Project_Line_Items__r.Project_Resources__r$User__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Project__c.Project_Line_Items__r.Project_Resources__r$RequieredHours__c</field>
+    </columns>
+    <format>Tabular</format>
+    <name>Reporte 4</name>
+    <params>
+        <name>co</name>
+        <value>0</value>
+    </params>
+    <reportType>Prueba__c</reportType>
+    <scope>user</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>false</showGrandTotal>
+    <showSubTotals>false</showSubTotals>
+    <sortColumn>Project__c.Project_Line_Items__r$Role__c</sortColumn>
+    <sortOrder>Desc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>Project__c$CreatedDate</dateColumn>
+        <interval>INTERVAL_CURRENT</interval>
+    </timeFrameFilter>
+</Report>

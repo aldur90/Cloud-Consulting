@@ -116,7 +116,7 @@
         <inputAssignments>
             <field>Amount__c</field>
             <value>
-                <elementReference>$Record.Amount</elementReference>
+                <elementReference>$Record.Amount__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>

@@ -103,14 +103,29 @@ public with sharing class resourcesAllocation {
    //List for available resources
    List<User> availableResources = New List<User>();
 
-    for (User user : resources){
-        if(user.Project_Resources__r.isEmpty()){
-            availableResources.add(user);
-        }
-    }
-        
-    return availableResources;    
-  }
+   for (User user : resources){
+       /*if(user.Project_Resources__r.isEmpty()){
+           availableResources.add(user);
+       }*/
+       system.debug(' size : '+ notAvailableDates.get(user.Id).size());
+       system.debug(' size : '+ notAvailableDates);
+       user.availableDays__c = sumAvailableDates.get(user.Id);
+       if(notAvailableDates.get(user.Id).size()==0){
+         user.notAvailableDates__c = 'Not assigned';
+         availableResources.add(user);
+       } else {
+       
+         String str = String.join( notAvailableDates.get(user.Id), ' \n' );
+         system.debug(' list values : '+ str);
+         user.notAvailableDates__c = str;
+         if(sumAvailableDates.get(user.Id)!=0) availableResources.add(user);
+         
+       }
+       
+   }
+       
+   return availableResources;    
+ }
 
  @AuraEnabled(cacheable=true)
  public static List <Project_Line_Item__c> getHoursPendingByRole (Id projectId, String roleName) {
@@ -119,7 +134,7 @@ public with sharing class resourcesAllocation {
                    SELECT HoursPending__c
                    FROM Project_Line_Item__c
                    WHERE Project__c = : projectId
-                   AND HoursPending__c > 0
+                   //AND HoursPending__c > 0
                    AND Role__c = : roleName
                    ];
                

@@ -55,6 +55,7 @@ export default class AllocateResource extends LightningElement {
     @api recordId;
     @api columns = columns;
     update = 0;
+    pending;
     
     getBusinessDatesCount(startDate, endDate) {
       let count = 0;
@@ -87,6 +88,7 @@ export default class AllocateResource extends LightningElement {
           fields.Project_Line_Item__c = this.role.Id;
           fields.StartDate__c = draft.startDate;
           fields.EndDate__c = draft.endDate;
+
           console.log('Antes Dias Habiles Front ' + this.workingDays);
           //let startDate = new Date( Date.parse(draft.startDate) );
           let startDate = new Date( Date.parse(draft.startDate + ' 06:00:00 GMT') );
@@ -99,12 +101,27 @@ export default class AllocateResource extends LightningElement {
           this.workingDays = this.getBusinessDatesCount(startDate,endDate);
           console.log('Despues Dias Habiles Front ' + this.workingDays);
           //fields.RequieredHours__c = Math.ceil((Date.parse(draft.endDate)-Date.parse(draft.startDate)+1) / (1000 * 3600 * 24))*8;
-          fields.RequieredHours__c =  this.workingDays * 8;
+          fields.RequieredHours__c =  this.workingDays * 10;
           
-          
+          console.log(typeof draft.endDate);
+          console.log('Equal1 ' + (draft.endDate==''));
+          console.log('Equal2 ' + (draft.endDate==null));
+          console.log('Equal3 ' + (draft.endDate==""));
+          console.log('Equal4 ' + (draft.endDate==undefined));
+          if(fields.StartDate__c == null || fields.EndDate__c == null || fields.StartDate__c == "" || fields.EndDate__c == ""){
+            console.log('ENTRE');
+            const event = new ShowToastEvent({
+            title: 'ERROR!',
+            message: 'No Date Field can be NULL',
+            variant: 'Error'
+            });
+            this.dispatchEvent(event);
+          }
           return fields;
         })
       );
+
+      
 
       console.log(inputsDates);
       allocateResources({ allocationJSON: inputsDates })
@@ -126,11 +143,16 @@ export default class AllocateResource extends LightningElement {
           variant: 'Error'
         });
         this.dispatchEvent(event);
-        
+      })
+      .finally(() => {
+        //this.template.querySelector("lightning-datatable").draftValues = [];
       });
     }
 
-    
+    @api handleClick(event) {
+      this.template.querySelector("lightning-datatable").draftValues = [];
+    }
+
     @track hoursPendingToAssign;
     @wire(getHoursPendingByRole, {
       projectId: "$recordId",
@@ -140,6 +162,8 @@ export default class AllocateResource extends LightningElement {
     hoursPending(result, error) {
       if (result.data) {
         this.hoursPendingToAssign = result.data[0].HoursPending__c;
+        this.pending = (this.hoursPendingToAssign !=0);
+        console.log('Pendiente ' + this.pending);
       } else if (error) {
         this.hoursPendingToAssign = undefined;
       }

@@ -35,3 +35,15 @@
 .margin-check{
     margin-right: 5px;
 }
+
+.notask-style{
+    text-align: center;
+    font-weight: bolder;
+    font-size: large;
+    padding-bottom: 2%;
+}
+
+.center-icon{
+    text-align: center;
+    padding-bottom: 3%;
+}

@@ -155,9 +155,8 @@
     <externalSharingModel>ControlledByParent</externalSharingModel>
     <label>Project Line Item</label>
     <nameField>
-        <displayFormat>PLI-{0000}</displayFormat>
         <label>Project Line Item Name</label>
-        <type>AutoNumber</type>
+        <type>Text</type>
     </nameField>
     <pluralLabel>Project Line Items</pluralLabel>
     <searchLayouts></searchLayouts>

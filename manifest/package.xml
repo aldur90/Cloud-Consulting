@@ -25,6 +25,14 @@
 		<name>AuraDefinitionBundle</name>
 	</types>
 	<types>
+		<members>*</members>
+		<name>ContentAsset</name>
+	</types>
+	<types>
+		<members>Gestion_de_Proyectos</members>
+		<name>CustomApplication</name>
+	</types>
+	<types>
 		<members>Opportunity.Amount__c</members>
 		<members>Opportunity.EndDate__c</members>
 		<members>Opportunity.ProjectManager__c</members>
@@ -66,11 +74,41 @@
 	</types>
 	<types>
 		<members>*</members>
+		<name>CustomTab</name>
+	</types>
+	<types>
+		<members>Gestion_de_Proyectos_UtilityBar</members>
+		<members>Project_Record_Page</members>
+		<name>FlexiPage</name>
+	</types>
+	<types>
+		<members>*</members>
 		<name>Flow</name>
 	</types>
 	<types>
 		<members>*</members>
 		<name>LightningComponentBundle</name>
+	</types>
+	<types>
+		<members>Project_Resources__c.Rol_Recurso_Horas_Reporte_general</members>
+		<members>Project__c.Rol_Recurso_Horas_Reporte_general</members>
+		<name>ListView</name>
+	</types>
+	<types>
+		<members>unfiled$public/Horas_cubiertasA_cubrir_por_rol_lue</members>
+		<members>unfiled$public/Porcentaje_horas_por_rol_ORu</members>
+		<members>unfiled$public/Reporte_2_Report_r4X</members>
+		<members>unfiled$public/Reporte_2_cAE</members>
+		<members>unfiled$public/Reporte_3_dona_UGn</members>
+		<members>unfiled$public/Reporte_4_2wr</members>
+		<members>unfiled$public/Reporte_4_ARy</members>
+		<members>unfiled$public/Total_horas_cubiertas_proyecto_vs_ZAQ</members>
+		<members>unfiled$public/prueba_reporte_825</members>
+		<name>Report</name>
+	</types>
+	<types>
+		<members>*</members>
+		<name>ReportType</name>
 	</types>
 	<types>
 		<members>*</members>

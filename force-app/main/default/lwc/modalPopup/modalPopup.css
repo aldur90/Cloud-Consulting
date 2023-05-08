@@ -1,0 +1,37 @@
+.width-style {
+    width: 90%;
+    height: 35px;
+    margin-left: 5%;
+    margin-right: 5%;
+    border: 0px;
+    border-radius: 5px;
+}
+
+.input-style {
+    height: 30px;
+    margin-top: 5px;
+    width: 272px;
+    margin-left: 15px;
+}
+
+.padding{
+    text-align: center;
+}
+
+.p-bottom{
+    margin-bottom: 20px;
+}
+
+.hours-style-e{
+    width: 50%;
+    float: left;
+}
+
+.hours-style-r{
+    width: 50%;
+    float: right;
+}
+
+.slds-modal__container{
+    width: 30%;
+}
