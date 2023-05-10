@@ -56,7 +56,7 @@ public with sharing class resourcesAllocationTrigger {
             hoursExceeded.Project__c = resourcesList[0].Project__c;
             hoursExceeded.Project_Line_Item__c = resourcesList[0].Project_Line_Item__c;*/
 
-            resourcesList[0].RequieredHours__c = -1;
+            resourcesList[0].RequieredHours__c = 5;
             
             System.debug('Horas en exceso ' + resourcesList[0].RequieredHours__c);
             resourcesRejected.add(resourcesList[0]);

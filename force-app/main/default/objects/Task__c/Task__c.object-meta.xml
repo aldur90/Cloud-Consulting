@@ -148,18 +148,18 @@
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableLicensing>false</enableLicensing>
-    <enableReports>true</enableReports>
+    <enableReports>false</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <externalSharingModel>Private</externalSharingModel>
-    <label>Project</label>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <label>Task</label>
     <nameField>
-        <label>Project Name</label>
+        <label>Task Name</label>
         <type>Text</type>
     </nameField>
-    <pluralLabel>Projects</pluralLabel>
+    <pluralLabel>Tasks</pluralLabel>
     <searchLayouts></searchLayouts>
-    <sharingModel>ReadWrite</sharingModel>
+    <sharingModel>ControlledByParent</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

@@ -1,0 +1,28 @@
+<template>
+    <lightning-card  title="" if:true={taskData} >    
+        <div class="card-style">
+            <!--Cabecera donde va el rol y las horas a cubrir-->
+            <div class="header">
+                <h1>Proyecto Acme - 3 tareas pendientes</h1>
+            </div>
+            <div>
+                <lightning-datatable
+                        key-field="Id"
+                        data={taskData}
+                        columns={columns}
+                        hide-checkbox-column="true"
+                        onrowaction={handleRowAction}>
+                </lightning-datatable>
+                <c-modal-Popup task={currentTask} ontaskupdated={handleRecord}> </c-modal-Popup>
+            </div>       
+        </div>
+    </lightning-card>
+    <lightning-card if:false={taskData}>
+        <div class="notask-style">
+            Aún no cuentas con tareas asignadas para este proyecto
+        </div>
+        <div class="center-icon">
+            <img src="https://cdn-icons-png.flaticon.com/512/5058/5058432.png" width="80" height="80" alt="No task free icon" title="No task free icon">
+        </div>
+    </lightning-card>
+</template>

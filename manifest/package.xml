@@ -39,6 +39,7 @@
 		<members>Project_Line_Item__c.Project__c</members>
 		<members>Project_Line_Item__c.Role__c</members>
 		<members>Project_Resources__c.EndDate__c</members>
+		<members>Project_Resources__c.HoursAllocated__c</members>
 		<members>Project_Resources__c.Project_Line_Item__c</members>
 		<members>Project_Resources__c.Project__c</members>
 		<members>Project_Resources__c.RequieredHours__c</members>
@@ -53,7 +54,15 @@
 		<members>Project__c.SquadLead__c</members>
 		<members>Project__c.StartDate__c</members>
 		<members>Project__c.Status__c</members>
+		<members>Task__c.Description__c</members>
+		<members>Task__c.EndDate__c</members>
+		<members>Task__c.EstimatedHours__c</members>
+		<members>Task__c.Project_Resource__c</members>
+		<members>Task__c.StartDate__c</members>
+		<members>Task__c.Status__c</members>
+		<members>Task__c.WorkedHours__c</members>
 		<members>User.Rate__c</members>
+		<members>User.availableDays__c</members>
 		<members>User.notAvailableDates__c</members>
 		<name>CustomField</name>
 	</types>
@@ -63,6 +72,7 @@
 		<members>Project_Line_Item__c</members>
 		<members>Project_Resources__c</members>
 		<members>Project__c</members>
+		<members>Task__c</members>
 		<members>User</members>
 		<name>CustomObject</name>
 	</types>

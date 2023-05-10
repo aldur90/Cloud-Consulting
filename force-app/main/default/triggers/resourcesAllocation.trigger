@@ -24,8 +24,8 @@ trigger resourcesAllocation on Project_Resources__c (before insert) {
     System.debug('Size ' + (resourcesRejected.size()>0));
     String[] problems = new String[0];
     if (resourcesRejected.size()>0){
-        System.debug('A');
-    if(resourcesRejected[0].RequieredHours__c == -1){
+        System.debug('A ' + resourcesRejected[0].RequieredHours__c);
+    if(resourcesRejected[0].RequieredHours__c == 5){
         System.debug('1');
         //for(Project_Resources__c rRejected : resourcesRejected){
         //    rRejected.adderror('Allocated hours exceed pending');
@@ -72,4 +72,3 @@ trigger resourcesAllocation on Project_Resources__c (before insert) {
 }
 
 }
-

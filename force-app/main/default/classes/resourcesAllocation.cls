@@ -18,7 +18,7 @@ public with sharing class resourcesAllocation {
  //List of available employees by role
  @AuraEnabled(cacheable=true)
  public static List <User> getAvailableEmployeesByRole (String roleName, String projectId){
-
+	System.debug('Project Id ' + projectId);
    //Find the project
    Project__c project =
                    [
@@ -34,6 +34,7 @@ public with sharing class resourcesAllocation {
                    (
                        SELECT StartDate__c, EndDate__c, Project__c 
                        FROM Project_Resources__r
+                       //WHERE Project__c != : projectId
                        //WHERE (StartDate__c >=: project.StartDate__c AND StartDate__c <=: project.EndDate__c)
                        //OR (EndDate__c >=: project.StartDate__c AND EndDate__c <=: project.EndDate__c)
                        ORDER BY StartDate__c ASC
@@ -42,6 +43,33 @@ public with sharing class resourcesAllocation {
                    WHERE UserRole.Name = : roleName
                    
                    ];
+    
+                   List <User> resourcesProject = 
+                   [
+                   SELECT Id , FirstName, LastName, UserRole.Name, Rate__c,
+                   (
+                       SELECT StartDate__c, EndDate__c, Project__c 
+                       FROM Project_Resources__r
+                       WHERE Project__c = : projectId
+                       //WHERE (StartDate__c >=: project.StartDate__c AND StartDate__c <=: project.EndDate__c)
+                       //OR (EndDate__c >=: project.StartDate__c AND EndDate__c <=: project.EndDate__c)
+                       ORDER BY StartDate__c ASC
+                   )
+                   FROM User
+                   WHERE UserRole.Name = : roleName
+                   
+                   ];
+     
+     System.debug('Resources ' + resources);
+     System.debug('Resources Project ' + resourcesProject);
+  Set<Id> resourcesProjectId = New Set<Id>();
+  for(User pr: resourcesProject){
+    if(!pr.Project_Resources__r.isEmpty()){
+        resourcesProjectId.add(pr.Id);
+    }
+  }
+
+  System.debug('Set Id Project ' + resourcesProjectId);
    
    Map<Id, Integer> sumAvailableDates = New Map<Id, Integer>();
    Integer totalProjectDays = project.StartDate__c.daysBetween(project.EndDate__c) + 1;
@@ -107,11 +135,12 @@ public with sharing class resourcesAllocation {
        /*if(user.Project_Resources__r.isEmpty()){
            availableResources.add(user);
        }*/
+       if(!resourcesProjectId.contains(user.Id)){
        system.debug(' size : '+ notAvailableDates.get(user.Id).size());
        system.debug(' size : '+ notAvailableDates);
        user.availableDays__c = sumAvailableDates.get(user.Id);
        if(notAvailableDates.get(user.Id).size()==0){
-         user.notAvailableDates__c = 'No asignado';
+         user.notAvailableDates__c = 'Not assigned';
          availableResources.add(user);
        } else {
        
@@ -121,6 +150,7 @@ public with sharing class resourcesAllocation {
          if(sumAvailableDates.get(user.Id)!=0) availableResources.add(user);
          
        }
+      }
        
    }
        
@@ -142,16 +172,16 @@ public with sharing class resourcesAllocation {
  }
 
  @AuraEnabled
- public static Boolean allocateResources(String allocationJSON){
+ public static void allocateResources(String allocationJSON){
 
    List<Project_Resources__c> projectResources = (List<Project_Resources__c>) JSON.deserialize(allocationJSON, List<Project_Resources__c>.class);
    
    insert projectResources;
    
-   return true;
+   
  }
 
- @AuraEnabled(cacheable=true)
+/* @AuraEnabled(cacheable=true)
  public static Integer calculateWorkingDays(Date startDate, Date endDate){          
         
    Integer workingDays = 0;  
@@ -168,5 +198,5 @@ public with sharing class resourcesAllocation {
    System.debug('--Working days'+workingDays);  
    return workingDays;  
 } 
-
+*/
 }

@@ -1,0 +1,15 @@
+<template>
+    <template if:true={rolesWithoutAssignment}>
+      <lightning-card title="Assing Tasks">
+      <p class="slds-p-horizontal_small"></p>
+      <template for:each={rolesWithoutAssignment.data} for:item="role">
+        
+        <div key={role}>
+            <c-assing-task role={role} record-id={recordId}></c-assing-task>
+          </div>
+        </template>
+      
+      <p slot="footer"></p>
+    </lightning-card>
+    </template>
+  </template>
