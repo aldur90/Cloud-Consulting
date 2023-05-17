@@ -1,7 +1,8 @@
 <template>
 
-    <div>
-      
+    
+      <template if:true={pending}>
+        <template if:true={resList}>
       <template if:true={role}>
         
         <div class="slds-m-top_medium slds-m-bottom_x-large">
@@ -11,7 +12,7 @@
         </div>
       </template>
   
-      <template if:true={resList}>
+      <!-- <template if:true={resList}> -->
         <div style="margin-right:10%; margin-left:10%">
         
         <lightning-datatable
@@ -28,8 +29,9 @@
       
       </div>
       
-      </template>
-      <br />
-    </div>
+    </template>
+    </template>
+      
+    
    
   </template>

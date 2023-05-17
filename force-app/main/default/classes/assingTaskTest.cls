@@ -351,7 +351,10 @@ public with sharing class assingTaskTest {
     );
         List <Project_Line_Item__c> hoursPending = resourcesAllocation.getHoursPendingByRole(projects.get(0).Id, newRoles[0]);
         List<Project_Line_Item__c> rolesWithoutAssignment = resourcesAllocation.getRolesWhithoutAssignment(projects.get(0).Id);
+        List <Project_Line_Item__c> hoursPendingTask = assingTask.getHoursPendingByRole(projects.get(0).Id, newRoles[0]);
+        List<Project_Line_Item__c> rolesWithoutAssignmentTask = assingTask.getRolesWhithoutAssignment(projects.get(0).Id);
     }
+       
     
     @isTest
     static void assingTask() {

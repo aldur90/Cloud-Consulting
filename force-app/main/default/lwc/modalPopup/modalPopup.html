@@ -18,22 +18,27 @@
                     icon-class="slds-button_icon-inverse"
                     onclick={handleDialogClose}
                   ></lightning-button-icon>
-        
-                  <h2 class="slds-text-heading_medium slds-hyphenate header-string">
-                    {task.task}
-                  </h2>
                 </header>
                 <!-- Header End -->
                 <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">   
+                    <h2 class="header-string">
+                        {task.task}
+                    </h2>
                     <div class="padding" >
                         <div class="p-bottom">
                             <div class="hours-style-e">
-                                <h4>Horas estimadas</h4>
-                                <h2>{task.estimatedHours}</h2>
+                                <h4>Estimated hours</h4>
+                                <div class="hours-style">
+                                    <h2>{task.estimatedHours}</h2>
+
+                                </div>
                             </div>
                             <div class="hours-style-r">
-                                <h4>Horas registradas</h4>
-                                <h2>{task.recordedHours}</h2>
+                                <h4>Recorded hours</h4>
+                                <div class="hours-style">
+                                    <h2>{task.recordedHours}</h2>
+
+                                </div>
                             </div>
                         </div>
                         <div class="p-bottom">

@@ -2,11 +2,11 @@ import { LightningElement, api, wire, track } from "lwc";
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { refreshApex } from "@salesforce/apex";
 import getAvailableEmployeesByRole from "@salesforce/apex/assingTask.getAvailableEmployeesByRole";
+import getHoursPendingByRole from "@salesforce/apex/assingTask.getHoursPendingByRole";
 import assingTasks from "@salesforce/apex/assingTask.assingTasks";
 import { loadStyle, loadScript } from 'lightning/platformResourceLoader';
 import ToastBreakLine from '@salesforce/resourceUrl/ToastBreakLine';
-import { createRecord, getFieldValue } from 'lightning/uiRecordApi';
-
+import { createRecord, getRecord, getFieldValue } from 'lightning/uiRecordApi';
 
 /*const columns = [
     { label: "Name", fieldName: "FN", type: "text" },
@@ -30,13 +30,11 @@ export default class AssingTask extends LightningElement {
     @api recordId;
     //@api columns = [...cols].filter(col => col.fieldName != 'FirstName');
     @api columns = cols;
-
+    update = 0;
+    pending;
 
     renderedCallback() {
         
-        console.log('ToastBreakLine')
-        console.log(ToastBreakLine)
-
         loadStyle(this, ToastBreakLine)
         .then(() => console.log('Files loaded.'))
         .catch(error => console.log("Error " + error.body.message))
@@ -68,7 +66,8 @@ export default class AssingTask extends LightningElement {
           });
           this.dispatchEvent(event);
           //this.update ++;
-          
+          this.template.querySelector("lightning-datatable").draftValues = [];
+          this.update ++;
           return this.refresh();
       })
       .catch((error) => {
@@ -115,12 +114,30 @@ export default class AssingTask extends LightningElement {
 }*/
 
 @track resList;
-    @wire(getAvailableEmployeesByRole, { roleName: "$role.Role__c", projectId: "$recordId" })
+    @wire(getAvailableEmployeesByRole, { roleName: "$role.Role__c", projectId: "$recordId"})
     resourceList(result, error) {
+      console.log('result ' + result.data);
       this.resList = result;
     if (result.error) {
+      console.log('result error ' + result.error);
       this.resList = undefined;
     }
+    }
+
+    @track hoursPendingToAssign;
+    @wire(getHoursPendingByRole, {
+      projectId: "$recordId",
+      roleName: "$role.Role__c",
+      current: "$update"    
+    })
+    hoursPending(result, error) {
+      if (result.data) {
+        this.hoursPendingToAssign = result.data[0].TaskHoursPending__c;
+        this.pending = (this.hoursPendingToAssign !=0);
+        console.log('Pendiente ' + this.pending);
+      } else if (error) {
+        this.hoursPendingToAssign = undefined;
+      }
     }
 
 async refresh() {

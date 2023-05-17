@@ -3,7 +3,7 @@ import getAvailableEmployeesByRole from "@salesforce/apex/resourcesAllocation.ge
 import getHoursPendingByRole from "@salesforce/apex/resourcesAllocation.getHoursPendingByRole";
 import allocateResources from "@salesforce/apex/resourcesAllocation.allocateResources";
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import calculateWorkingDays from "@salesforce/apex/resourcesAllocation.calculateWorkingDays";
+//import calculateWorkingDays from "@salesforce/apex/resourcesAllocation.calculateWorkingDays";
 import { refreshApex } from "@salesforce/apex";
 
 /* 
@@ -132,6 +132,7 @@ export default class AllocateResource extends LightningElement {
           variant: 'success'
           });
           this.dispatchEvent(event);
+          this.template.querySelector("lightning-datatable").draftValues = [];
           this.update ++;
           return this.refresh();
       })

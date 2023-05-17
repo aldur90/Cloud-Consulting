@@ -3,11 +3,11 @@ import getTask from '@salesforce/apex/Workload.getTask';
 import { refreshApex } from "@salesforce/apex";
 
 const columns = [
-    { label: 'Tarea', fieldName: 'task' },
-    { label: 'Estado', fieldName: 'status'},
-    { label: 'Horas Estimadas', fieldName: 'estimatedHours', type: 'number'},
-    { label: 'Horas Registradas', fieldName: 'recordedHours', type: 'number'},
-    { type: "button", label: 'Acciones', initialWidth: 100, 
+    { label: 'Task', fieldName: 'task' },
+    { label: 'Status', fieldName: 'status'},
+    { label: 'Estimated hours', fieldName: 'estimatedHours', type: 'number'},
+    { label: 'Recorded hours', fieldName: 'recordedHours', type: 'number'},
+    { type: "button", label: 'Actions', initialWidth: 100, 
         typeAttributes: {
             label: {fieldName: 'buttonLabel'},
             disabled: false,
@@ -26,17 +26,30 @@ const columns = [
 export default class ResourceAllocation extends LightningElement {
 
     @track columns = columns;
-    @api projectResourceId = 'a02Dp000001a1S2IAI'; 
+    @api projectResourceId = ''; 
     @track taskData = []; 
     @track currentTask = {};
     @track taskDataToRefresh = []; 
     change = 0;
+    @track counTask = '';
+    @track completedTask = false;
+   
+    get thereAreTask (){
 
-    @wire( getTask , { projectResourceId : 'a02Dp000001a1S2IAI', current: "$change" })
+        return this.taskData.length == 0 && !this.completedTask;
+    }
+
+    get thereAreTaskToDo (){
+        return this.taskData.length > 0;
+    }
+
+    @wire( getTask , { projectResourceId : '$projectResourceId', current: '$change'})
     taskList(result){
         if(result.data){
             console.log('Sí hay data de task');
             let newData = [];
+            this.completedTask = result.data.length > 0;
+
             for(var i=0 ; i<result.data.length ; i++){
                 
                 let wh = result.data[i].WorkedHours__c == undefined ? 0 : result.data[i].WorkedHours__c;
@@ -54,7 +67,8 @@ export default class ResourceAllocation extends LightningElement {
                     };
                     
                     newData.push(t);
-                }
+                    this.completedTask = false;
+                } 
 
             /*    if(newData.estimatedHours == newData.recordedHours){
                     newData.status = 'Completed';
@@ -62,6 +76,8 @@ export default class ResourceAllocation extends LightningElement {
                 }*/
             }
             this.taskData = newData;
+
+            this.counTask = this.taskData.length;
 
         }else if (result.error){
             this.taskData = undefined;
@@ -86,6 +102,7 @@ export default class ResourceAllocation extends LightningElement {
         console.log(event.detail);
         this.taskDataToRefresh = [];
         console.log(this.taskData.length);
+
         for(let i=0; i<this.taskData.length ; i++){
             console.log('Entra for');
             console.log(this.taskData[i].taskId + ' vs ' + event.detail.Id);
@@ -104,9 +121,12 @@ export default class ResourceAllocation extends LightningElement {
                 recordedHours: this.taskData[i].recordedHours,
                 buttonLabel:  this.taskData[i].buttonLabel
             };
+      
 
             this.taskDataToRefresh.push(ts);
-            this.change +=1;
+            this.change ++;
+
+
         }
         console.log('Finaliza proceso');
         console.log(this.taskDataToRefresh[0]);

@@ -1,18 +1,18 @@
 @isTest
 public with sharing class dataFactory {
 	public static List<Project__c> createProjects(Integer numOfProjects, Date StartDate, Date EndDate) {
-    Opportunity sampleOp = new Opportunity(
+    /*Opportunity sampleOp = new Opportunity(
       Name = 'SampleOp',
       StageName = 'Closed Won',
       CloseDate = Date.today()
     );
-    insert sampleOp;
+    insert sampleOp;*/
     List<Project__c> projects = new List<Project__c>();
     for (Integer p = 0; p < numOfProjects; p++) {
       Project__c pro = new Project__c(
         Name = 'Project' + p,
-        Opportunity__c = sampleOp.Id,
-        Status__c = 'In Progress',
+        //Opportunity__c = sampleOp.Id,
+        Status__c = 'Pre Kickoff',
         StartDate__c = StartDate,
         EndDate__c = EndDate
       );

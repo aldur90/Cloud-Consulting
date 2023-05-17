@@ -1,4 +1,18 @@
 public class Workload {
+    @AuraEnabled(cacheable=true)
+    public static list<Project_Resources__c> getProject (){
+        Id uId = UserInfo.getUserId();
+        List<Project_Resources__c> projects = [SELECT Id,
+                                               			Project__c,
+                                                       Project__r.Name,
+                                                       Name,
+                                                       User__c
+                                              FROM Project_Resources__c
+                                              WHERE User__c =: uId];
+        System.debug(projects.get(0).Project__r.Name);
+        return projects;   
+        
+    }
     
 	@AuraEnabled(cacheable=true)
     public static list<Task__c> getTask (Id projectResourceId){
@@ -13,7 +27,7 @@ public class Workload {
                                 FROM Task__c
                                 WHERE Project_Resource__c =: projectResourceId
                              	ORDER BY Project_Resource__c];
-        System.debug('task ' + tasks.get(0).Description__c);
+        System.debug(tasks.get(0).Description__c);
         return tasks;
     } 
     
@@ -30,23 +44,9 @@ public class Workload {
                                 Project_Resource__c
                         FROM Task__c
                        	WHERE Id =: taskId];
-
-                           system.debug(task);
-        if(completed){
-            task.Status__c = 'Completed';
-        }else{
-            task.Status__c = 'In Progress';
-        }
-
-        system.debug('Status ' + task.Status__c);
-        system.debug(task);
-        system.debug('Worked ' + workedHours);
-        system.debug('Worked ' + task.WorkedHours__c);
-        //task.Status__c = completed == true ? 'Completed': 'In Progress';
-        //if(task.WorkedHours__c == NULL) task.WorkedHours__c =0;
-        task.WorkedHours__c += workedHours;
-
         
+        task.Status__c = completed == true ? 'Completed': 'In Progress';
+        task.WorkedHours__c += workedHours;
         
         update task;
         

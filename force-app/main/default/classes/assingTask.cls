@@ -37,9 +37,39 @@ public with sharing class assingTask {
         
  }*/
 
+  //List of the roles with pending time to be assigned for tasks
+  @AuraEnabled(cacheable=true)
+  public static List <Project_Line_Item__c> getRolesWhithoutAssignment (Id projectId) {
+   List<Project_Line_Item__c> rolesWithoutAssignment =
+                   [
+                   SELECT Id, Role__c, HoursPending__c, HoursPerRole__c, HoursAllocated__c 
+                   FROM Project_Line_Item__c 
+                   WHERE Project__c = : projectId
+                   AND TaskHoursPending__c > 0     
+                   ];
+         
+   return rolesWithoutAssignment; 
+ }
+
+ @AuraEnabled(cacheable=true)
+ public static List <Project_Line_Item__c> getHoursPendingByRole (Id projectId, String roleName) {
+   List <Project_Line_Item__c> hoursPending = 
+                   [
+                   SELECT TaskHoursPending__c
+                   FROM Project_Line_Item__c
+                   WHERE Project__c = : projectId
+                   //AND HoursPending__c > 0
+                   AND Role__c = : roleName
+                   ];
+               
+   return hoursPending; 
+ }
+
  @AuraEnabled(cacheable=true)
  public static List <UserWrapper> getAvailableEmployeesByRole (String roleName, String projectId){
 
+        System.debug('Rol ' + roleName);
+        System.debug('Project Id ' + projectId);
         List<Project_Resources__c> resources = 
         [
             SELECT  User__c, 
@@ -54,7 +84,7 @@ public with sharing class assingTask {
                     
                                 
         ];
-
+        System.debug('Resource ' + resources[0]);
         List<UserWrapper> resourcesChild = new List<UserWrapper>();
                     
             
@@ -67,12 +97,12 @@ public with sharing class assingTask {
                     rchild.LastName= childIns.User__r.LastName;
                     rchild.RequieredHours= childIns.RequieredHours__c;
                     rchild.HoursAllocated= childIns.HoursAllocated__c;
-                    if(rchild.RequieredHours>rchild.HoursAllocated)                
+                    if(rchild.RequieredHours>rchild.HoursAllocated){                
                     resourcesChild.add(rchild);
-                  
+                    }
 
              }
-
+             System.debug('Resource Child ' + resourcesChild[0]);  
         return resourcesChild;
         
  }
